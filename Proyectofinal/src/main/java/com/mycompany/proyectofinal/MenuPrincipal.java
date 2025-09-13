@@ -3,7 +3,6 @@ import java.util.*;
 
 public class MenuPrincipal {
 
-
     public void ejecutar() {
         Scanner entrada = new Scanner(System.in);
         int opcion = 0;
