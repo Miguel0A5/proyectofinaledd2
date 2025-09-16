@@ -1,0 +1,5 @@
+--- Reporte de Alumnos ---
+Miguel | 10.00 | Aprobado
+Andrea | 9.00 | Aprobado
+Cristina | 8.00 | Aprobado
+Kevin | 7.00 | Aprobado
