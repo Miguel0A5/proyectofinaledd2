@@ -3,23 +3,25 @@ import java.util.*;
 
 public class MenuPrincipal {
 
+
     public void ejecutar() {
         Scanner entrada = new Scanner(System.in);
         int opcion = 0;
         do {
             System.out.println("\n--- MENÚ Principal ---");
-            System.out.println("1.- Ejemplo de shell -- Miguel_A5"); //MiguelShell
-            System.out.println("2.- Ejemplo de inserción - Arturo"); //ArturoIsercion
-            System.out.println("3.- Ejemplo de Selección - Isarel"); //IsarelSeleccion
-            System.out.println("4.- Ejemplo de Radix -- Kevin"); //KevinRadix
-            System.out.println("5.- Ejemplo de Heap -- Armando"); // ArmandoHeap
-            System.out.println("6.- Ejemplo de Merge -- Axel y Miguel"); //AxelMiguelMerge
-            System.out.println("7.- Ejemplo de Quicksort -- Eduardo"); //EduardoQuicksort
+            System.out.println("1.- Organizacíon secuencial");
+            System.out.println("7.- Salir del programa");
+            //Aqui pongan sus opciones
             try {
                 opcion = Integer.parseInt(entrada.nextLine());
                 switch (opcion) {
+                    
+                    /*  Para inciar su porgrama aqui, escriban el nombre de su archivo, sesuigo de su nombre
+                        y al final le pondran new seguido dle nombre de su archivo y ();, despues ponen el 
+                        nombre del objeto . y el nombre de su método que ejecute todo*/
                     case 1:
-
+                        MiguelA5Gomez miguel = new MiguelA5Gomez();
+                        miguel.ejecutar();
                         break;
 
                     case 2:
