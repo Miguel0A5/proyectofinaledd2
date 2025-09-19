@@ -25,6 +25,8 @@ public class MenuPrincipal {
                         break;
 
                     case 2:
+                        BusquedaAlumnos busqueda = new BusquedaAlumnos();
+                        busqueda.ejecutar();
                         break;
 
                     case 3:

@@ -8,7 +8,8 @@ public class BusquedaAlumnos {
     private static AlumnosSec[] alumnos = new AlumnosSec[100];
     private static int total = 0; // número actual de alumnos registrados
 
-    public static void main(String[] args) {
+    public void ejecutar() {
+
         Scanner sc = new Scanner(System.in);
         int opcion;
 
