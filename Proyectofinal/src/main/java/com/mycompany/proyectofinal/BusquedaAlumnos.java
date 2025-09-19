@@ -114,4 +114,48 @@ public class BusquedaAlumnos {
         System.out.println("Alumno registrado correctamente.");
     }
 
+    // Buscar alumno por matrícula (con submenú para ver el proceso)
+    private static void buscarAlumno(Scanner sc) {
+        if (total == 0) {
+            System.out.println("No hay alumnos registrados.");
+            return;
+        }
+
+        System.out.print("Ingrese la matrícula a buscar: ");
+        String buscada = sc.nextLine().trim().toUpperCase();
+
+        // Submenú: elegir ver resultado o proceso
+        System.out.println("\nOpciones de búsqueda:");
+        System.out.println("1. Ver solo el resultado");
+        System.out.println("2. Ver proceso paso a paso");
+        System.out.print("Selecciona una opción: ");
+
+        int eleccion = sc.nextInt();
+        sc.nextLine();
+
+        int comparaciones = 0;
+        int indiceEncontrado = -1;
+
+        for (int i = 0; i < total; i++) {
+            comparaciones++;
+            if (eleccion == 2) {
+                System.out.println("Comparando " + alumnos[i].getMatricula() + " == " + buscada +
+                                   " ? -> " + (alumnos[i].getMatricula().equalsIgnoreCase(buscada) ? "sí" : "no"));
+            }
+            if (alumnos[i].getMatricula().equalsIgnoreCase(buscada)) {
+                indiceEncontrado = i;
+                break;
+            }
+        }
+
+        if (indiceEncontrado != -1) {
+            System.out.println("\nAlumno encontrado:");
+            System.out.println(alumnos[indiceEncontrado]);
+            System.out.println("Total de comparaciones: " + comparaciones);
+        } else {
+            System.out.println("\nNo existe ningún alumno con esa matrícula.");
+            System.out.println("Total de comparaciones realizadas: " + comparaciones);
+        }
+    }
+
 }
