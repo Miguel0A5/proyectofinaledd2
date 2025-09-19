@@ -158,4 +158,17 @@ public class BusquedaAlumnos {
         }
     }
 
+     // Mostrar todos los alumnos registrados
+    private static void mostrarAlumnos() {
+        if (total == 0) {
+            System.out.println("No hay alumnos registrados.");
+            return;
+        }
+
+        System.out.println("\n=== LISTA DE ALUMNOS ===");
+        for (int i = 0; i < total; i++) {
+            System.out.println((i + 1) + ". " + alumnos[i]);
+        }
+    }
+
 }
