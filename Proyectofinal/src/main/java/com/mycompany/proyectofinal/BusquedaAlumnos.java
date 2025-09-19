@@ -203,4 +203,42 @@ public class BusquedaAlumnos {
         }
     }
 
+    // Ejemplo gráfico con matrículas fijas
+    private static void ejemploBusquedaSecuencial() {
+        System.out.println("\n--- Ejemplo gráfico: Búsqueda secuencial ---");
+        String[] arreglo = { "ABC1234", "DEF5678", "GHI9012", "JKL3456", "MNO7890" };
+        String buscado = "JKL3456";
+
+        System.out.print("Arreglo: [");
+        for (int i = 0; i < arreglo.length; i++) {
+            System.out.print(arreglo[i]);
+            if (i < arreglo.length - 1)
+                System.out.print(", ");
+        }
+        System.out.println("]");
+
+        System.out.println("Queremos buscar: " + buscado);
+        System.out.println("Proceso (comparaciones):");
+
+        int comparaciones = 0;
+        int indiceEncontrado = -1;
+
+        for (int i = 0; i < arreglo.length; i++) {
+            comparaciones++;
+            System.out.println("Comparando " + arreglo[i] + " == " + buscado + " ? -> " +
+                    (arreglo[i].equals(buscado) ? "sí" : "no"));
+            if (arreglo[i].equals(buscado)) {
+                indiceEncontrado = i;
+                break;
+            }
+        }
+
+        if (indiceEncontrado != -1) {
+            System.out.println("\nResultado: matrícula encontrada en índice " + indiceEncontrado +
+                    " (0-based), comparación " + comparaciones + ".");
+        } else {
+            System.out.println("\nResultado: matrícula NO encontrada tras " + comparaciones + " comparaciones.");
+        }
+    }
+
 }
