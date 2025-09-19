@@ -186,3 +186,158 @@ Con este desarrollo, el proyecto ofrece:
 - Visualización paso a paso de las comparaciones.
 - Eliminación de registros sin romper la estructura de datos.
 - Explicación clara de la técnica de búsqueda secuencial y su aplicación práctica.
+
+
+
+
+
+
+
+# Módulo 3 – Búsqueda Binaria
+
+**Autores:** Arturo Tress Ruiz
+
+---
+
+## Introducción
+
+Este proyecto en Java implementa un módulo de **búsqueda binaria de números** mediante una aplicación de consola interactiva.
+
+La búsqueda binaria es una técnica eficiente para localizar un elemento dentro de una lista ordenada. En lugar de revisar todos los elementos uno por uno (como en la búsqueda secuencial), este algoritmo **divide la lista a la mitad en cada paso**, reduciendo drásticamente el número de comparaciones necesarias.
+
+El programa ofrece dos modos de uso:
+
+1. **Iniciar Tutorial:** Explica paso a paso cómo funciona la búsqueda binaria, utilizando mensajes sencillos como si se estuviera enseñando a un niño.
+2. **Iniciar sin apoyo:** Permite usar el algoritmo directamente, sin explicaciones adicionales.
+
+## Funcionalidades del Módulo
+
+El módulo permite:
+
+1. **Ingresar una lista de números:** El usuario define cuántos elementos tendrá la lista y los ingresa uno por uno.
+2. **Ordenar automáticamente la lista:** Antes de buscar, el programa ordena los números de menor a mayor.
+3. **Realizar búsqueda binaria:** El usuario ingresa el número que desea encontrar y el programa lo localiza en la lista (si existe).
+4. **Modo tutorial:** Explica cada paso del proceso de búsqueda binaria con ejemplos y mensajes didácticos.
+5. **Validación de entradas:** El programa verifica que solo se ingresen números válidos, evitando errores y caídas.
+6. **Menú principal:** Permite seleccionar entre el tutorial, el modo sin apoyo o salir del programa.
+
+## Estructura del Código
+
+### Clase **BusquedaBinaria**
+
+Es la clase principal y contiene tanto el menú como las implementaciones del algoritmo.
+
+* **Método `main`:**
+
+  * Muestra el menú principal con 3 opciones: *Iniciar Tutorial, Iniciar sin apoyo, Salir*.
+  * Valida que el usuario elija una opción numérica válida (1–3).
+  * Redirige la ejecución al modo correspondiente.
+
+* **Método `iniciarTutorial(Scanner)`:**
+
+  * Guía paso a paso la creación del arreglo, su ordenamiento y la ejecución de la búsqueda binaria.
+  * Explica con mensajes sencillos lo que está ocurriendo en cada paso.
+  * Llama al método `busquedaBinariaExplicada` para mostrar cómo se descarta la mitad izquierda o derecha según corresponda.
+
+* **Método `iniciarSinApoyo(Scanner)`:**
+
+  * Permite ingresar el arreglo y realizar la búsqueda binaria sin explicaciones adicionales.
+  * Llama al método `busquedaBinaria` para encontrar el número de manera rápida.
+
+* **Método `busquedaBinaria(int[], int)`:**
+
+  * Implementación clásica del algoritmo binario.
+  * Divide la lista, compara el valor central con el número buscado y ajusta los límites de búsqueda hasta encontrar el número o descartar que exista.
+
+* **Método `busquedaBinariaExplicada(int[], int)`:**
+
+  * Igual que el anterior, pero mostrando mensajes explicativos.
+  * Indica en cada paso qué posición se revisa y si se descarta la izquierda o la derecha.
+
+* **Método `leerEntero(Scanner)`:**
+
+  * Valida que el usuario ingrese únicamente números enteros.
+  * Si se ingresa una letra u otro valor, muestra un mensaje de error y vuelve a solicitar la entrada.
+
+## Detalle del Funcionamiento
+
+### 1. Menú Principal
+
+* Muestra tres opciones:
+
+  1. Iniciar Tutorial
+  2. Iniciar sin apoyo
+  3. Salir
+* Valida la opción ingresada para evitar errores.
+
+### 2. Ingreso del Arreglo
+
+* El usuario define el tamaño del arreglo (cantidad de números).
+* Se solicita cada número individualmente.
+* Se validan las entradas para garantizar que sean números enteros.
+
+### 3. Ordenamiento
+
+* Antes de la búsqueda, el arreglo se ordena automáticamente con `Arrays.sort()`.
+* Esto asegura que la búsqueda binaria funcione correctamente.
+
+### 4. Ejecución de la Búsqueda
+
+* El usuario ingresa el número a buscar.
+* Se compara con el elemento central del arreglo:
+
+  * Si es igual → número encontrado.
+  * Si es menor → descartar la mitad derecha.
+  * Si es mayor → descartar la mitad izquierda.
+* El proceso se repite hasta encontrar el número o hasta que no quede ninguna parte de la lista por revisar.
+
+### 5. Resultados
+
+* Si el número está en el arreglo, se muestra la posición donde se encontró.
+* Si no existe, se muestra un mensaje indicándolo.
+* En modo tutorial, se muestran todos los pasos intermedios.
+
+## Validaciones y Experiencia de Usuario
+
+* Se utiliza `scanner.hasNextInt()` para comprobar que el usuario ingrese números válidos.
+* En caso de error (como ingresar una letra), el programa no se detiene; muestra un aviso y pide el número de nuevo.
+* Los mensajes en el modo tutorial se muestran con comillas (`" "`) para simular una explicación infantil y clara.
+
+## Ejemplo Conceptual de Búsqueda Binaria
+
+Supongamos que la lista es:
+
+[2, 5, 8, 12, 16, 23, 38]
+
+Y buscamos el número **16**.
+
+1. Revisamos el centro: 12. Como 16 es mayor que 12, descartamos la izquierda.
+2. Nueva sublista: \[16, 23, 38]. El centro ahora es 23. Como 16 es menor, descartamos la derecha.
+3. Nueva sublista: \[16]. Encontramos el número.
+
+El algoritmo necesita solo **3 pasos** en lugar de recorrer los 7 elementos como en la búsqueda secuencial.
+
+## Explicación Conceptual
+
+* La búsqueda binaria requiere que la lista esté ordenada.
+* En cada paso reduce el número de elementos a la mitad.
+* Su complejidad es **O(log n)**, mucho más rápida que la búsqueda secuencial (O(n)), especialmente para listas grandes.
+* Es una técnica básica pero muy poderosa en ciencias de la computación.
+
+## Integración y Estilo de Código
+
+* Se sigue un estilo modular: cada método tiene una responsabilidad clara.
+* Los nombres de métodos son intuitivos (`iniciarTutorial`, `busquedaBinariaExplicada`, etc.).
+* Se prioriza la interacción clara con el usuario para que incluso principiantes comprendan cómo funciona el algoritmo.
+
+
+## Progreso Alcanzado
+
+Con este desarrollo, el módulo ofrece:
+
+* Una implementación **completa y validada** de la búsqueda binaria.
+* Explicación paso a paso con un modo tutorial accesible para principiantes.
+* Modo avanzado sin explicaciones para usuarios que ya comprendan el algoritmo.
+* Validaciones que garantizan robustez y evitan errores comunes en la entrada de datos.
+
+

@@ -11,7 +11,7 @@ public class MenuPrincipal {
             System.out.println("\n--- MENÚ Principal ---");
             System.out.println("1.- Organizacíon secuencial");
             System.out.println("2.- Busqueda secuencial");
-
+            System.out.println("3.- Busqueda binaria");
             System.out.println("7.- Salir del programa");
             // Aqui pongan sus opciones
             try {
@@ -36,6 +36,8 @@ public class MenuPrincipal {
                         break;
 
                     case 3:
+                        BusquedaBinaria binaria = new BusquedaBinaria();
+                        binaria.ejecutar(); 
                         break;
 
                     case 4:
