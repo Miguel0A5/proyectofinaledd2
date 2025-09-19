@@ -241,4 +241,15 @@ public class BusquedaAlumnos {
         }
     }
 
+    // Explicación de búsqueda secuencial
+    private static void explicarBusquedaSecuencial() {
+        System.out.println("\n--- Qué es búsqueda secuencial ---");
+        System.out.println("La búsqueda secuencial (linear search) recorre el arreglo elemento por elemento");
+        System.out.println("comparando con la clave buscada hasta encontrarla o terminar el arreglo.\n");
+        System.out.println("Complejidad temporal:");
+        System.out.println(" - Mejor caso: O(1) (si el elemento está en la primera posición)");
+        System.out.println(" - Peor y promedio: O(n) (si el elemento está al final o no está)");
+        System.out.println("Espacio adicional: O(1) (sin estructuras auxiliares importantes)");
+    }
+
 }
