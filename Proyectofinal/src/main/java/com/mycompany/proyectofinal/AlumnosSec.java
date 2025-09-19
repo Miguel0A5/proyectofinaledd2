@@ -1,4 +1,6 @@
-    // Clase que representa a un Alumno dentro del sistema de búsqueda secuencial
+package com.mycompany.proyectofinal;
+
+// Clase que representa a un Alumno dentro del sistema de búsqueda secuencial
 public class AlumnosSec {
     private String matricula;
     private String nombre;
