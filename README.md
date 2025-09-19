@@ -81,3 +81,108 @@ Durante el desarrollo se abordaron y resolvieron los siguientes puntos:
 - Búsquedas y ordenamientos: se implementaron de forma que no rompan la lógica de archivo secuencial (el archivo original permanece intacto).
 
 Con este módulo, la práctica de Estructura de Datos 2 queda resuelta: demuestra cómo almacenar y procesar información en archivos secuenciales de forma ordenada, segura y extensible.
+
+# Módulo 2 – Búsqueda Secuencial
+*Autor:* Miguel Tress y Christian Axel 
+
+## Introducción
+Este proyecto en Java implementa un módulo de *búsqueda secuencial de alumnos* mediante una aplicación de consola. La técnica de búsqueda secuencial consiste en recorrer un conjunto de registros uno por uno hasta encontrar el que coincide con un criterio de búsqueda.
+
+El objetivo principal de este módulo es permitir la gestión de un grupo de alumnos, incluyendo su registro, búsqueda, visualización y eliminación, de manera sencilla y con interacción directa con el usuario a través de un menú.
+
+El código está desarrollado siguiendo principios de *programación orientada a objetos*, con métodos claramente definidos para cada operación y un flujo de ejecución controlado mediante un menú principal.
+
+---
+
+## Funcionalidades del Módulo
+
+El módulo permite:
+1. *Registrar alumnos*: Solicita matrícula, nombre y promedio, validando la entrada para asegurar formato correcto.
+2. *Buscar alumnos por matrícula*: Implementa búsqueda secuencial con opción de ver el proceso paso a paso.
+3. *Mostrar todos los alumnos*: Lista los registros en el orden en que fueron agregados.
+4. *Dar de baja a un alumno*: Permite eliminar un registro y reorganizar el arreglo para no dejar huecos.
+5. *Ejemplo gráfico de búsqueda*: Muestra visualmente cómo se realiza la búsqueda secuencial.
+6. *Explicación conceptual*: Proporciona información sobre la técnica de búsqueda secuencial, su complejidad y ventajas.
+
+Todas las entradas del usuario se validan para evitar errores y asegurar una experiencia consistente y robusta.
+
+---
+
+## Estructura del Código
+
+### Clase BusquedaAlumnos
+Es la clase central del módulo. Contiene:
+- *Atributos de clase:*
+  - AlumnosSec[] alumnos – Arreglo que almacena hasta 100 alumnos.
+  - int total – Contador de alumnos registrados actualmente.
+- *Método ejecutar()*: Controla el flujo principal del módulo, mostrando el menú, leyendo la opción del usuario y redirigiendo a los métodos correspondientes.
+- *Métodos auxiliares:*
+  - registrarAlumno(Scanner sc) – Valida y agrega un alumno al arreglo.
+  - buscarAlumno(Scanner sc) – Busca un alumno por matrícula y permite ver el proceso de comparación.
+  - mostrarAlumnos() – Imprime todos los alumnos registrados.
+  - darDeBajaAlumno(Scanner sc) – Elimina un alumno y reorganiza el arreglo.
+  - ejemploBusquedaSecuencial() – Demuestra visualmente la técnica de búsqueda secuencial con datos fijos.
+  - explicarBusquedaSecuencial() – Explica la teoría detrás de la búsqueda secuencial, su complejidad temporal y espacial.
+
+### Clase AlumnosSec
+Define la *estructura de datos de cada alumno*.
+- *Atributos:*
+  - String matricula
+  - String nombre
+  - double promedio
+- *Métodos:*
+  - getMatricula(), getNombre(), getPromedio() – Devuelven los valores de los atributos.
+  - toString() – Devuelve una representación en texto legible para mostrar en listas o reportes.
+
+---
+
+## Detalle del Funcionamiento
+
+### Registro de Alumnos
+- Se solicita matrícula, nombre y promedio.
+- La matrícula debe tener *3 letras y 4 números* (Ej: ABC1234).
+- El nombre solo acepta *letras y espacios*.
+- El promedio debe ser un valor numérico entre 0 y 10.
+- Cada registro se almacena en el arreglo alumnos y se incrementa el contador total.
+
+### Búsqueda Secuencial
+- El usuario ingresa la matrícula a buscar.
+- El método recorre el arreglo desde el inicio hasta el final, comparando cada matrícula con la buscada.
+- Opcionalmente, el usuario puede ver *cada comparación paso a paso*.
+- La búsqueda devuelve el alumno encontrado o indica que no existe.
+
+### Mostrar y Eliminar Alumnos
+- mostrarAlumnos() lista los alumnos en el orden de registro.
+- darDeBajaAlumno() busca la matrícula, elimina el alumno del arreglo y desplaza los elementos siguientes para no dejar huecos.
+
+### Ejemplo Gráfico
+- Se usa un arreglo de matrículas predefinidas para mostrar cómo la búsqueda secuencial compara cada elemento hasta encontrar el objetivo.
+- Permite visualizar el concepto de “comparaciones” de manera clara.
+
+### Explicación Conceptual
+- La búsqueda secuencial tiene *complejidad O(n)* en el peor caso.
+- Es simple de implementar y no requiere estructuras auxiliares.
+- Es útil para arreglos pequeños o cuando el orden de los datos no importa.
+
+---
+
+## Validaciones y Experiencia de Usuario
+- Se capturan excepciones como InputMismatchException para evitar que el programa falle si se ingresa un valor inválido.
+- Los menús muestran mensajes claros sobre el estado de las operaciones (registro exitoso, alumno no encontrado, etc.).
+- Se asegura que el usuario no pueda agregar alumnos con matrículas duplicadas.
+
+---
+
+## Integración y Estilo de Código
+- Cada método tiene responsabilidades claras: registrar, buscar, mostrar o eliminar.
+- Se sigue una convención consistente de nombres y se usa un Scanner compartido en los submenús para entradas del usuario.
+- El código es *modular y fácil de mantener*, lo que permite futuras mejoras, como agregar persistencia en archivo o reportes automáticos.
+
+---
+
+## Progreso Alcanzado
+Con este desarrollo, el proyecto ofrece:
+- Un módulo de gestión de alumnos *totalmente funcional* usando búsqueda secuencial.
+- Visualización paso a paso de las comparaciones.
+- Eliminación de registros sin romper la estructura de datos.
+- Explicación clara de la técnica de búsqueda secuencial y su aplicación práctica.
