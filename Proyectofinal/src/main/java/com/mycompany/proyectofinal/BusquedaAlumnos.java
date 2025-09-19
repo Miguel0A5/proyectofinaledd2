@@ -2,6 +2,7 @@ package com.mycompany.proyectofinal;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
 public class BusquedaAlumnos {
     // Arreglo para almacenar alumnos (capacidad máxima 100)
     private static AlumnosSec[] alumnos = new AlumnosSec[100];
@@ -140,7 +141,7 @@ public class BusquedaAlumnos {
             comparaciones++;
             if (eleccion == 2) {
                 System.out.println("Comparando " + alumnos[i].getMatricula() + " == " + buscada +
-                                   " ? -> " + (alumnos[i].getMatricula().equalsIgnoreCase(buscada) ? "sí" : "no"));
+                        " ? -> " + (alumnos[i].getMatricula().equalsIgnoreCase(buscada) ? "sí" : "no"));
             }
             if (alumnos[i].getMatricula().equalsIgnoreCase(buscada)) {
                 indiceEncontrado = i;
@@ -158,7 +159,7 @@ public class BusquedaAlumnos {
         }
     }
 
-     // Mostrar todos los alumnos registrados
+    // Mostrar todos los alumnos registrados
     private static void mostrarAlumnos() {
         if (total == 0) {
             System.out.println("No hay alumnos registrados.");
@@ -168,6 +169,37 @@ public class BusquedaAlumnos {
         System.out.println("\n=== LISTA DE ALUMNOS ===");
         for (int i = 0; i < total; i++) {
             System.out.println((i + 1) + ". " + alumnos[i]);
+        }
+    }
+
+    // Dar de baja alumno por matrícula (elimina del arreglo y recorre para no dejar
+    // huecos)
+    private static void darDeBajaAlumno(Scanner sc) {
+        if (total == 0) {
+            System.out.println("No hay alumnos registrados para dar de baja.");
+            return;
+        }
+
+        System.out.print("Ingrese la matrícula del alumno a dar de baja: ");
+        String baja = sc.nextLine().trim().toUpperCase();
+
+        int indice = -1;
+        for (int i = 0; i < total; i++) {
+            if (alumnos[i].getMatricula().equalsIgnoreCase(baja)) {
+                indice = i;
+                break;
+            }
+        }
+
+        if (indice != -1) {
+            // Mover todos los alumnos una posición a la izquierda
+            for (int i = indice; i < total - 1; i++) {
+                alumnos[i] = alumnos[i + 1];
+            }
+            alumnos[--total] = null; // liberar la última posición
+            System.out.println("Alumno con matrícula " + baja + " dado de baja exitosamente.");
+        } else {
+            System.out.println("No se encontró ningún alumno con esa matrícula.");
         }
     }
 
