@@ -44,8 +44,6 @@ public class BusquedaAlumnos {
                 default -> System.out.println("Opción no válida.");
             }
         } while (opcion != 7);
-
-        sc.close();
     }
 
     // ---------------- MÉTODOS ----------------

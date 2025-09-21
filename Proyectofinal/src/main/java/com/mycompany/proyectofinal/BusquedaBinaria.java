@@ -45,8 +45,6 @@ public class BusquedaBinaria {
                     System.out.println("Opción no válida, intenta de nuevo.");
             }
         } while (opcion != 3);  // Mientras no sea "3", el menú se sigue mostrando.
-
-        scanner.close();  // Cerramos el escáner cuando ya no lo usamos.
     }
 
     // ============================
