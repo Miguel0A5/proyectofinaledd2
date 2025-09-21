@@ -1,12 +1,17 @@
+package com.mycompany.proyectofinal;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+/**
+ * Clase con toda la lógica de Organización Indexada:
+ * manejo de archivo de datos y archivo de índice.
+ */
 public class IndexedOrganization {
 
     static final int NAME_CHARS = 50;
     static final int MAJOR_CHARS = 30;
-
     static final int DATA_RECORD_SIZE = (NAME_CHARS + MAJOR_CHARS) * 2 + 4 + 1;
 
     static final String DATA_FILE = "students.dat";
@@ -14,48 +19,8 @@ public class IndexedOrganization {
 
     static Map<Integer, Long> indexMap = new HashMap<>();
 
-    public static void main(String[] args) throws IOException {
-        loadIndex();
-        Scanner sc = new Scanner(System.in);
-
-        while (true) {
-            System.out.println("\n=== Organizacion Indexada (Java) ===");
-            System.out.println("1) Agregar estudiante");
-            System.out.println("2) Buscar por ID");
-            System.out.println("3) Actualizar por ID");
-            System.out.println("4) Eliminar por ID");
-            System.out.println("5) Listar todos");
-            System.out.println("6) Salir");
-            System.out.print("Opcion: ");
-            String opt = sc.nextLine().trim();
-
-            switch (opt) {
-                case "1":
-                    addStudent(sc);
-                    break;
-                case "2":
-                    searchStudent(sc);
-                    break;
-                case "3":
-                    updateStudent(sc);
-                    break;
-                case "4":
-                    deleteStudent(sc);
-                    break;
-                case "5":
-                    listAll();
-                    break;
-                case "6":
-                    saveIndex();
-                    System.out.println("Saliendo...");
-                    return;
-                default:
-                    System.out.println("Opcion no valida.");
-            }
-        }
-    }
-
-    static void loadIndex() throws IOException {
+    /** Cargar índice en memoria */
+    public static void loadIndex() throws IOException {
         indexMap.clear();
         File f = new File(INDEX_FILE);
         if (!f.exists()) return;
@@ -74,7 +39,8 @@ public class IndexedOrganization {
         }
     }
 
-    static void saveIndex() throws IOException {
+    /** Guardar índice en disco */
+    public static void saveIndex() throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(INDEX_FILE, StandardCharsets.UTF_8))) {
             for (Map.Entry<Integer, Long> e : indexMap.entrySet()) {
                 bw.write(e.getKey() + "|" + e.getValue());
@@ -83,20 +49,19 @@ public class IndexedOrganization {
         }
     }
 
-    static long getDataFileLength() {
+    private static long getDataFileLength() {
         File f = new File(DATA_FILE);
-        if (!f.exists()) return 0L;
-        return f.length();
+        return f.exists() ? f.length() : 0L;
     }
 
-    static void addStudent(Scanner sc) throws IOException {
+    /** Operaciones de CRUD */
+    public static void addStudent(Scanner sc) throws IOException {
         System.out.print("ID (entero): ");
         int id = Integer.parseInt(sc.nextLine().trim());
         if (indexMap.containsKey(id)) {
             System.out.println("ID ya existe.");
             return;
         }
-
         System.out.print("Nombre: ");
         String name = sc.nextLine();
         System.out.print("Edad: ");
@@ -105,7 +70,6 @@ public class IndexedOrganization {
         String major = sc.nextLine();
 
         long offset = getDataFileLength();
-
         try (RandomAccessFile raf = new RandomAccessFile(DATA_FILE, "rw")) {
             raf.seek(offset);
             writeFixedString(raf, name, NAME_CHARS);
@@ -113,24 +77,21 @@ public class IndexedOrganization {
             writeFixedString(raf, major, MAJOR_CHARS);
             raf.writeBoolean(false);
         }
-
         indexMap.put(id, offset);
         saveIndex();
         System.out.println("Estudiante agregado.");
     }
 
-    static void searchStudent(Scanner sc) throws IOException {
+    public static void searchStudent(Scanner sc) throws IOException {
         System.out.print("ID a buscar: ");
         int id = Integer.parseInt(sc.nextLine().trim());
         if (!indexMap.containsKey(id)) {
             System.out.println("No existe registro con ese ID.");
             return;
         }
-        long pos = indexMap.get(id);
-        Record rec = readRecordAt(pos);
-        if (rec.isDeleted) {
-            System.out.println("Registro eliminado.");
-        } else {
+        Record rec = readRecordAt(indexMap.get(id));
+        if (rec.isDeleted) System.out.println("Registro eliminado.");
+        else {
             System.out.println("ID: " + id);
             System.out.println("Nombre: " + rec.name);
             System.out.println("Edad: " + rec.age);
@@ -138,7 +99,7 @@ public class IndexedOrganization {
         }
     }
 
-    static void updateStudent(Scanner sc) throws IOException {
+    public static void updateStudent(Scanner sc) throws IOException {
         System.out.print("ID a actualizar: ");
         int id = Integer.parseInt(sc.nextLine().trim());
         if (!indexMap.containsKey(id)) {
@@ -152,18 +113,15 @@ public class IndexedOrganization {
             return;
         }
 
-        System.out.println("Nombre actual: " + rec.name);
-        System.out.print("Nuevo nombre (enter = mantener): ");
+        System.out.print("Nuevo nombre (enter = mantener '" + rec.name + "'): ");
         String nName = sc.nextLine();
         if (nName.isBlank()) nName = rec.name;
 
-        System.out.println("Edad actual: " + rec.age);
-        System.out.print("Nueva edad (enter = mantener): ");
+        System.out.print("Nueva edad (enter = mantener " + rec.age + "): ");
         String nAgeS = sc.nextLine();
         int nAge = nAgeS.isBlank() ? rec.age : Integer.parseInt(nAgeS);
 
-        System.out.println("Carrera actual: " + rec.major);
-        System.out.print("Nueva carrera (enter = mantener): ");
+        System.out.print("Nueva carrera (enter = mantener '" + rec.major + "'): ");
         String nMajor = sc.nextLine();
         if (nMajor.isBlank()) nMajor = rec.major;
 
@@ -174,11 +132,10 @@ public class IndexedOrganization {
             writeFixedString(raf, nMajor, MAJOR_CHARS);
             raf.writeBoolean(false);
         }
-
         System.out.println("Registro actualizado.");
     }
 
-    static void deleteStudent(Scanner sc) throws IOException {
+    public static void deleteStudent(Scanner sc) throws IOException {
         System.out.print("ID a eliminar: ");
         int id = Integer.parseInt(sc.nextLine().trim());
         if (!indexMap.containsKey(id)) {
@@ -191,24 +148,21 @@ public class IndexedOrganization {
             System.out.println("Registro ya eliminado.");
             return;
         }
-
         try (RandomAccessFile raf = new RandomAccessFile(DATA_FILE, "rw")) {
             raf.seek(pos + (NAME_CHARS * 2) + 4 + (MAJOR_CHARS * 2));
             raf.writeBoolean(true);
         }
-
         indexMap.remove(id);
         saveIndex();
         System.out.println("Registro eliminado.");
     }
 
-    static void listAll() throws IOException {
+    public static void listAll() throws IOException {
         File f = new File(DATA_FILE);
         if (!f.exists()) {
             System.out.println("No hay datos.");
             return;
         }
-
         try (RandomAccessFile raf = new RandomAccessFile(DATA_FILE, "r")) {
             long total = raf.length() / DATA_RECORD_SIZE;
             System.out.println("Registros totales: " + total);
@@ -226,32 +180,25 @@ public class IndexedOrganization {
         }
     }
 
-    static void writeFixedString(RandomAccessFile raf, String text, int nChars) throws IOException {
+    /** Utilidades privadas */
+    private static void writeFixedString(RandomAccessFile raf, String text, int nChars) throws IOException {
         if (text == null) text = "";
         String trimmed = text.length() > nChars ? text.substring(0, nChars) : text;
-        for (int i = 0; i < trimmed.length(); i++) {
-            raf.writeChar(trimmed.charAt(i));
-        }
-        for (int i = trimmed.length(); i < nChars; i++) {
-            raf.writeChar(0);
-        }
+        for (int i = 0; i < trimmed.length(); i++) raf.writeChar(trimmed.charAt(i));
+        for (int i = trimmed.length(); i < nChars; i++) raf.writeChar(0);
     }
 
-    static Record readRecordAt(long offset) throws IOException {
+    private static Record readRecordAt(long offset) throws IOException {
         try (RandomAccessFile raf = new RandomAccessFile(DATA_FILE, "r")) {
             raf.seek(offset);
             char[] nameChars = new char[NAME_CHARS];
-            for (int i = 0; i < NAME_CHARS; i++) {
-                nameChars[i] = raf.readChar();
-            }
+            for (int i = 0; i < NAME_CHARS; i++) nameChars[i] = raf.readChar();
             String name = new String(nameChars).trim();
 
             int age = raf.readInt();
 
             char[] majorChars = new char[MAJOR_CHARS];
-            for (int i = 0; i < MAJOR_CHARS; i++) {
-                majorChars[i] = raf.readChar();
-            }
+            for (int i = 0; i < MAJOR_CHARS; i++) majorChars[i] = raf.readChar();
             String major = new String(majorChars).trim();
 
             boolean isDel = raf.readBoolean();
@@ -259,6 +206,7 @@ public class IndexedOrganization {
         }
     }
 
+    /** Clase interna para representar un registro */
     static class Record {
         String name;
         int age;
@@ -270,6 +218,6 @@ public class IndexedOrganization {
             this.age = age;
             this.major = major;
             this.isDeleted = isDeleted;
-        }
-    }
+        }
+    }
 }
